@@ -3,6 +3,7 @@
 # descobrir quais são eles e a sequência correta
 from random import randint
 lista = []
+tentativas = 0
 
 
 n1 = randint(0, 9)
@@ -25,7 +26,7 @@ n4 = randint(0, 9)
 while lista[0] == n4 or lista[1] == n4 or lista[2] == n4:
     n4 = randint(0, 9)
 lista.append(n4)
-print(lista)
+
 
 # usuário escolhendo
 
@@ -37,7 +38,6 @@ while list != lista:
     list.append(int(m2))
     list.append(int(m3))
     list.append(int(m4))
-    print(list)
 
     pos = 0
     count = 0
@@ -48,5 +48,8 @@ while list != lista:
             count += 1
 
     # resultados da tentativa
-    print(f'você acertou {count} números')
-    print(f'você acertou {pos} posições')
+
+    print(f'{list} - - você acertou {count} números - você acertou {pos} posições')
+    tentativas += 1
+
+print(f'você resolveu em {tentativas} tentativas')
