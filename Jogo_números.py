@@ -33,19 +33,20 @@ list = []
 while list != lista:
     list = []
     m1, m2, m3, m4 = input('Digite 4 números: ').split(' ')
-    list.append(m1)
-    list.append(m2)
-    list.append(m3)
-    list.append(m4)
+    list.append(int(m1))
+    list.append(int(m2))
+    list.append(int(m3))
+    list.append(int(m4))
     print(list)
 
     pos = 0
     count = 0
-    for c in range(0, 3):
-        if list[c] == list[c]:
+    for c in range(0, 4):
+        if list[c] == lista[c]:
+            pos += 1
+        if list[c] in lista:
             count += 1
-        else:
-            while list[c] != lista[c]:
 
-
-
+    # resultados da tentativa
+    print(f'você acertou {count} números')
+    print(f'você acertou {pos} posições')
