@@ -1,7 +1,5 @@
-# jogo do tiktok que precisa sortear
-# 4 números diferentes de 0 a 9 para
-# descobrir quais são eles e a sequência correta
 from random import randint
+
 lista = []
 tentativas = 0
 
@@ -33,7 +31,7 @@ lista.append(n4)
 list = []
 while list != lista:
     list = []
-    m1, m2, m3, m4 = input('Digite 4 números: ').split(' ')
+    m1, m2, m3, m4 = input('Digite 4 números: ').strip().split(' ')
     list.append(int(m1))
     list.append(int(m2))
     list.append(int(m3))
@@ -53,3 +51,9 @@ while list != lista:
     tentativas += 1
 
 print(f'você resolveu em {tentativas} tentativas')
+
+
+# quero fazer uma tabela para visualizar melhor as tentativas
+# quero colocar um limite de tentativas
+# quando der erro precisa repetir o input
+# fazer o input certo
