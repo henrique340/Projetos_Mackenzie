@@ -17,13 +17,13 @@ lista_Voto_Prefeito = []
 lista_eleitores = []
 
 # Variáveis
-Voto_Branco_Prefeito = 0
-Voto_Branco_Presidente = 0
-Voto_Branco_Governador = 0
+Voto_Branco_Prefeito = []
+Voto_Branco_Presidente = []
+Voto_Branco_Governador = []
 
-Voto_Nulo_Prefeito = 0
-Voto_Nulo_Presidente = 0
-Voto_Nulo_Governador = 0
+Voto_Nulo_Prefeito = []
+Voto_Nulo_Presidente = []
+Voto_Nulo_Governador = []
 
 #Funções
 def Menu():
@@ -86,61 +86,84 @@ def Cadastrar_Eleitores():
          break
 
 def Votar():
-     global voto
-     nome = input('Digite o nome do eleitor: ').upper()
-     if nome in lista_eleitores:
-        #prefeito
-        print('-'*45)
-        print('Votação Prefeito')
-        print('-'*45)
-        print('Para votar branco [vote -1]')
-        print('Para votar nulo [vote -2]')
-        voto = int(input('Digite seu voto: '))
-        if voto == '-1':
-           print(f'O eleitor {nome} votou em branco')
-           confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
-        elif voto == '-2':
-           print(f'O eleitor {nome} votou nulo')
-           confirmacao = input('Deseja confirmar o voto: [Sim]/[Não] ').upper()
-        else:
-           print(f'O número {voto} é o candidato {lista_Candidatos_Prefeito[voto]} do partido {lista_Partidos_Prefeito[voto]}')
-           confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
+     while True:
+        nome = input('Digite o nome do eleitor: ').upper()
+        if nome in lista_eleitores:
 
-        #governador
-        print('-' * 45)
-        print('Votação Governador')
-        print('-' * 45)
-        print('Para votar branco [vote -1]')
-        print('Para votar nulo [vote -2]')
-        voto = int(input('Digite seu voto: '))
-            if voto == '-1':
-               print(f'O eleitor {nome} votou em branco')
-               confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
-            elif voto == '-2':
-               print(f'O eleitor {nome} votou nulo')
-               confirmacao = input('Deseja confirmar o voto: [Sim]/[Não] ').upper()
-            else:
-               print(f'O número {voto} é o candidato {lista_Candidatos_Governador[voto]} do partido {lista_Partidos_Governador[voto]}')
-               confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
+           #prefeito
+           while True:
+              print('-'*45)
+              print('Votação Prefeito')
+              print('-'*45)
+              print('Para votar branco [vote -1]')
+              print('Para votar nulo [vote -2]')
+              voto = int(input('Digite seu voto: '))
+              if voto == '-1':
+                 print(f'O eleitor {nome} votou em branco')
+                 confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
+                 Voto_Branco_Prefeito[voto] += 1
+              elif voto == '-2':
+                 print(f'O eleitor {nome} votou nulo')
+                 confirmacao = input('Deseja confirmar o voto: [Sim]/[Não] ').upper()
+                 Voto_Nulo_Prefeito[voto] += 1
+              else:
+                 print(f'O número {voto} é o candidato {lista_Candidatos_Prefeito[voto]} do partido {lista_Partidos_Prefeito[voto]}')
+                 confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
+                 if confirmacao == 'SIM':
+                    lista_Candidatos_Prefeito[voto][voto] += 1
+                 else:
+                    break
 
-        #presidente
-        print('-' * 45)
-        print('Votação Presidente')
-        print('-' * 45)
-        print('Para votar branco [vote -1]')
-        print('Para votar nulo [vote -2]')
-        voto = int(input('Digite seu voto: '))
-        if voto == '-1':
-           print(f'O eleitor {nome} votou em branco')
-           confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
-        elif voto == '-2':
-           print(f'O eleitor {nome} votou nulo')
-           confirmacao = input('Deseja confirmar o voto: [Sim]/[Não] ').upper()
+           #governador
+           while True:
+              print('-' * 45)
+              print('Votação Governador')
+              print('-' * 45)
+              print('Para votar branco [vote -1]')
+              print('Para votar nulo [vote -2]')
+              voto = int(input('Digite seu voto: '))
+              if voto == '-1':
+                 print(f'O eleitor {nome} votou em branco')
+                 confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
+                 Voto_Branco_Governador[voto] += 1
+              elif voto == '-2':
+                 print(f'O eleitor {nome} votou nulo')
+                 confirmacao = input('Deseja confirmar o voto: [Sim]/[Não] ').upper()
+                 Voto_Nulo_Governador[voto] += 1
+              else:
+                 print(f'O número {voto} é o candidato {lista_Candidatos_Governador[voto]} do partido {lista_Partidos_Governador[voto]}')
+                 confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
+                 if confirmacao == 'SIM':
+                    lista_Candidatos_Governador[voto][voto] += 1
+                 else:
+                    break
+
+           #presidente
+           while True:
+              print('-' * 45)
+              print('Votação Presidente')
+              print('-' * 45)
+              print('Para votar branco [vote -1]')
+              print('Para votar nulo [vote -2]')
+              voto = int(input('Digite seu voto: '))
+              if voto == '-1':
+                 print(f'O eleitor {nome} votou em branco')
+                 confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
+                 Voto_Branco_Presidente[voto] += 1
+              elif voto == '-2':
+                 print(f'O eleitor {nome} votou nulo')
+                 confirmacao = input('Deseja confirmar o voto: [Sim]/[Não] ').upper()
+                 Voto_Nulo_Presidente[voto] += 1
+              else:
+                 print(f'O número {voto} é o candidato {lista_Candidatos_Presidente[voto]} do partido {lista_Partidos_Presidente[voto]}')
+                 confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
+                 if confirmacao == 'SIM':
+                    lista_Candidatos_Presidente[voto][voto] += 1
+                 else:
+                    break
+                 break
         else:
-           print(f'O número {voto} é o candidato {lista_Candidatos_Presidente[voto]} do partido {lista_Partidos_Presidente[voto]}')
-           confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
-     else:
-        print('Digite um nome válido')
+           print('Digite um nome válido')
 
 
 #sistema
