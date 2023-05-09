@@ -84,7 +84,7 @@ def Votar():
     global Voto_Nulo_Governador
     global Voto_Branco_Presidente
     global Voto_Nulo_Presidente
-
+    global votos
     while True:
         nome = input('Digite o nome do eleitor: ').upper()
         if nome in lista_eleitores:
@@ -108,8 +108,7 @@ def Votar():
                     print(f'O número {voto} é o candidato {lista_Candidatos_Prefeito[int(voto)]} do partido {lista_Partidos_Prefeito[int(voto)]}')
                     confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
                     if confirmacao == 'SIM':
-                        voto = int(lista_Candidatos_Prefeito[int(voto)][int(voto)])
-                        voto += 1
+                        votos += int(lista_Candidatos_Prefeito[int(voto)][int(voto)])
 
                         # governador
                         while True:
@@ -131,8 +130,7 @@ def Votar():
                                 print(f'O número {voto} é o candidato {lista_Candidatos_Governador[int(voto)]} do partido {lista_Partidos_Governador[int(voto)]}')
                                 confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
                                 if confirmacao == 'SIM':
-                                    voto = int(lista_Candidatos_Governador[int(voto)][int(voto)])
-                                    voto += 1
+                                    votos += int(lista_Candidatos_Governador[int(voto)][int(voto)])
 
                                     # presidente
                                     while True:
@@ -154,8 +152,7 @@ def Votar():
                                             print(f'O número {voto} é o candidato {lista_Candidatos_Presidente[int(voto)]} do partido {lista_Partidos_Presidente[int(voto)]}')
                                             confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
                                             if confirmacao == 'SIM':
-                                                voto = int(lista_Candidatos_Presidente[int(voto)][int(voto)])
-                                                voto += 1
+                                                votos += int(lista_Candidatos_Presidente[int(voto)][int(voto)])
                                                 break
                                             else:
                                                 print('Cancelando voto, tente novamente')
