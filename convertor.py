@@ -1,6 +1,5 @@
 # Funções
 
-
 def bin_dec(binario):
     n = str(binario)
     decimal = 0
@@ -9,6 +8,9 @@ def bin_dec(binario):
         decimal += int(n[i])*2**exp
         exp -= 1
     return decimal
+
+def bin_hex(binario):
+def dec_hex(decimal):
 
 
 def hexa_dec(hexadecimal):
