@@ -9,9 +9,22 @@ def bin_dec(binario):
         exp -= 1
     return decimal
 
-def bin_hex(binario):
-def dec_hex(decimal):
+def dec_bin(decimal):
+    binario = 0
+    while decimal > 0:
+        resto = decimal % 2
+        binario = str(resto) + binario
+        decimal // 2
+    print(binario)
 
+def dec_hex(decimal):
+    tabela_conversao = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f']
+    hexadecimal = []
+    while decimal > 0:
+        hexadecimal.append(tabela_conversao[(decimal % 16)])
+        decimal = decimal // 16
+    for item in range(len(hexadecimal)-1, -1, -1):
+        print(hexadecimal[item], end='')
 
 def hexa_dec(hexadecimal):
     tabela_conversao = {0: '0', 1: '1', 2: '2', 3: '3', 4: '4',
@@ -28,4 +41,8 @@ def hexa_dec(hexadecimal):
         else:
             return "O número hexadecimal é inválido."
         exp -= 1
-    return decimal
+    print(decimal)
+
+
+hexa_dec('15')
+
