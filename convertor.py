@@ -1,5 +1,4 @@
 # Funções
-
 def bin_dec(binario):
     n = str(binario)
     decimal = 0
@@ -9,13 +8,18 @@ def bin_dec(binario):
         exp -= 1
     return decimal
 
+def bin_hex(bin):
+    dec = bin_dec(bin)
+    return dec_hex(dec)
+
 def dec_bin(decimal):
-    binario = 0
+    binario = []
     while decimal > 0:
         resto = decimal % 2
-        binario = str(resto) + binario
-        decimal // 2
-    print(binario)
+        binario.insert(0, str(resto))
+        decimal //= 2
+    return ''.join(binario)
+
 
 def dec_hex(decimal):
     tabela_conversao = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f']
@@ -25,6 +29,7 @@ def dec_hex(decimal):
         decimal = decimal // 16
     for item in range(len(hexadecimal)-1, -1, -1):
         print(hexadecimal[item], end='')
+
 
 def hexa_dec(hexadecimal):
     tabela_conversao = {0: '0', 1: '1', 2: '2', 3: '3', 4: '4',
@@ -41,8 +46,42 @@ def hexa_dec(hexadecimal):
         else:
             return "O número hexadecimal é inválido."
         exp -= 1
-    print(decimal)
+    return decimal
 
 
-hexa_dec('15')
+#sistema
 
+while True:
+    print('''Opções
+    Binario
+    Decimal
+    Hexadecimal
+    Sair''')
+    base = input('Quer converter de: ').upper()
+    if base == 'SAIR':
+        break
+    conversao = input('Para: ').upper()
+    if base == 'BINARIO' and conversao == 'DECIMAL':
+        bin = int(input('Digite o número em binário: '))
+        print(f'o decimal de {bin} é {bin_dec(bin)}')
+    elif base == 'BINARIO' and conversao == 'HEXADECIMAL':
+        bin = int(input('Digite o número em binário: '))
+        print(f'o hexadecimal de {bin} é ', end='')
+        bin_hex(bin)
+        print('\n')
+    elif base == 'DECIMAL' and conversao == 'BINARIO':
+        dec = int(input('Digite o número em decimal: '))
+        print(f'o binário de {dec} é {dec_bin(dec)}')
+    elif base == 'DECIMAL' and conversao == 'HEXADECIMAL':
+        dec = int(input('Digite o número em decimal: '))
+        print(f'o hexadecimal de {dec} é ',end='')
+        dec_hex(dec)
+        print('\n')
+    elif base == 'HEXADECIMAL' and conversao == 'BINARIO':
+        hex = input('Digite o número em hexadecimal: ')
+        print(f'o binário de {hex} é {dec_bin(hexa_dec(hex))}')
+    elif base == 'HEXADECIMAL' and conversao == 'DECIMAL':
+        hex = input('Digite o número em hexadecimal: ')
+        print(f'o decimal de {hex} é {hexa_dec(hex)}')
+    else:
+        print('Erro, tente novamente')
