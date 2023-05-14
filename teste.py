@@ -35,16 +35,14 @@ def Cadastro_Candidatos():
                 numero = lista_Candidatos_Governador.index(nome)
                 partido = input('Digite o partido do candidato: ')
                 lista_Partidos_Governador.append(partido)
-                print(
-                    f'O candidato {nome} do numero {numero}, do partido {partido} e do cargo {cargo} foi adicionado com sucesso')
+                print(f'O candidato {nome} do numero {numero}, do partido {partido} e do cargo {cargo} foi adicionado com sucesso')
                 break
             elif cargo == 'PREFEITO':
                 lista_Candidatos_Prefeito.append(nome)
                 numero = lista_Candidatos_Prefeito.index(nome)
                 partido = input('Digite o partido do candidato: ')
                 lista_Partidos_Prefeito.append(partido)
-                print(
-                    f'O candidato {nome} do numero {numero}, do partido {partido} e do cargo {cargo} foi adicionado com sucesso')
+                print(f'O candidato {nome} do numero {numero}, do partido {partido} e do cargo {cargo} foi adicionado com sucesso')
                 break
             elif cargo == 'PRESIDENTE':
                 lista_Candidatos_Presidente.append(nome)
