@@ -1,6 +1,7 @@
 #bibliotecas
 from time import sleep
 from operator import itemgetter
+from collections import Counter
 
 # Listas
 lista_Candidatos_Governador = []
@@ -258,6 +259,39 @@ def Resultado():
     print(f'| Total de votos brancos = {Voto_Branco_Prefeito} e % {100 * Voto_Branco_Prefeito / (Voto_Nulo_Prefeito + Voto_Branco_Prefeito + Votos_Validos_Prefeito)} |')
     print(f'| Total de votos nulos = {Voto_Nulo_Prefeito} e % {100 * Voto_Nulo_Prefeito / (Voto_Nulo_Prefeito + Voto_Branco_Prefeito + Votos_Validos_Prefeito)} |')
 
+def partido_mais_frequente(lista):
+    partidos = [partido for _, _, partido in lista]
+    contador = Counter(partidos)
+    partido, frequencia = contador.most_common(1)[0]
+    return partido, frequencia
+
+def partido_menos_frequente(lista):
+    partidos = [partido for _, _, partido in lista]
+    contador = Counter(partidos)
+    partido, frequencia = contador.most_common()[-1]
+    return partido, frequencia
+
+def Relatorio(): #Função relatório ainda não funciona
+    print(f'Lista de eleitores que votaram: {lista_eleitores.sort()}')
+    print(f'O total de votos para um candidato é{Votos_Validos_Prefeito + Voto_Nulo_Prefeito + Voto_Branco_Prefeito} e a quantidade de eleitores é {len(lista_eleitores)}')
+
+    # Combinação de todas as listas de votos
+    todas_listas = []
+    todas_listas.extend(lista_Voto_Presidente[0])
+    todas_listas.extend(lista_Voto_Governador)
+    todas_listas.extend(lista_Voto_Prefeito)
+
+    # Calculando o partido mais frequente
+    partido_mais_frequente, frequencia_mais = partido_mais_frequente(todas_listas)
+
+    # Calculando o partido menos frequente
+    partido_menos_frequente, frequencia_menos = partido_menos_frequente(todas_listas)
+
+    # Exibindo o resultado
+    print(f'O partido mais frequente é {partido_mais_frequente} com {frequencia_mais} ocorrências')
+    print(f'O partido menos frquente é {partido_menos_frequente} com {frequencia_menos} ocorrências')
+
+
 # sistema
 while True:
     Menu()
@@ -270,6 +304,26 @@ while True:
         Votar()
     elif opc == 4:
         Resultado()
+    elif opc == 5:
+        print(f'Lista de eleitores que votaram: {lista_eleitores.sort()}')
+        print(f'O total de votos para um candidato é{Votos_Validos_Prefeito + Voto_Nulo_Prefeito + Voto_Branco_Prefeito} e a quantidade de eleitores é {len(lista_eleitores)}')
+        # Combinação de todas as listas de votos
+        todas_listas = []
+        todas_listas.extend(lista_Voto_Presidente[0])
+        todas_listas.extend(lista_Voto_Governador)
+        todas_listas.extend(lista_Voto_Prefeito)
+
+        # Calculando o partido mais frequente
+        partido_mais_frequente, frequencia_mais = partido_mais_frequente(todas_listas)
+
+        # Calculando o partido menos frequente
+        partido_menos_frequente, frequencia_menos = partido_menos_frequente(todas_listas)
+
+        # Exibindo o resultado
+        print(f'O partido mais frequente é {partido_mais_frequente} com {frequencia_mais} ocorrências')
+        print(f'O partido menos frquente é {partido_menos_frequente} com {frequencia_menos} ocorrências')
     elif opc == 6:
         print('Encerrando o programa')
         break
+    else:
+        print('Erro, tente novamente')
