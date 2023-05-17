@@ -134,6 +134,8 @@ def Votar():
                         for i in range(len(lista_Candidatos_Prefeito)):
                             if lista_Voto_Prefeito[i][0] == lista_Candidatos_Prefeito[voto_prefeito]:
                                 lista_Voto_Prefeito[i] = (lista_Voto_Prefeito[i][0], i, Partidos_Prefeito[i], 'PREFEITO', lista_Voto_Prefeito[i][4]+1)
+                            else:
+                                lista_Voto_Prefeito[i] = (lista_Voto_Prefeito[i][0], i, Partidos_Prefeito[i], 'PREFEITO', lista_Voto_Prefeito[i][4])
                         break
                     elif confirmacao == 'NAO':
                         print('Voto cancelado')
@@ -179,6 +181,8 @@ def Votar():
                         for i in range(len(lista_Candidatos_Governador)):
                             if lista_Voto_Governador[i][0] == lista_Candidatos_Prefeito[voto_governador]:
                                 lista_Voto_Governador[i] = (lista_Voto_Governador[i][0], i, Partidos_Governador[i], 'GOVERNADOR',lista_Voto_Governador[i][4] + 1)
+                            else:
+                                lista_Voto_Governador[i] = (lista_Voto_Governador[i][0], i, Partidos_Governador[i], 'GOVERNADOR', lista_Voto_Governador[i][4])
                         break
                     elif confirmacao == 'NAO':
                         print('Voto cancelado')
@@ -228,6 +232,11 @@ def Votar():
                         for i in range(len(lista_Candidatos_Presidente)):
                             if lista_Voto_Presidente[i][0] == lista_Candidatos_Presidente[voto_prefeito]:
                                 lista_Voto_Presidente[i] = (lista_Voto_Presidente[i][0], i, Partidos_Presidente[i],'PRESIDENTE', lista_Voto_Presidente[i][4] + 1)
+                                print('Voto sendo adicionado ...')
+                                sleep(3)
+                                print('-' * 45)
+                            else:
+                                lista_Voto_Presidente[i] = (lista_Voto_Presidente[i][0], i, Partidos_Presidente[i], 'PRESIDENTE', lista_Voto_Presidente[i][4])
                                 print('Voto sendo adicionado ...')
                                 sleep(3)
                                 print('-' * 45)
