@@ -66,6 +66,7 @@ def Cadastro_Candidatos():
             break
 
 def Cadastrar_Eleitores():
+    global lista_eleitores
     while True:
         nome = input('Digite o nome do eleitor: ').upper()
         if nome.isalpha():
@@ -74,6 +75,7 @@ def Cadastrar_Eleitores():
                 cpf = input('Digite o CPF do eleitor: ')
                 if len(cpf) == 11:
                     print(f'o eleitor {nome} de cpf {cpf} foi adicionado com sucesso')
+                    print(lista_eleitores)
                     break
                 else:
                     print('Digite um numero de cpf válido')
@@ -84,7 +86,7 @@ def Cadastrar_Eleitores():
             print('Erro, tente novamente')
 
 def Votar():
-    global Voto_Branco_Prefeito, Voto_Nulo_Prefeito, Votos_Validos_Prefeito, Voto_Branco_Governador, Voto_Nulo_Governador, Votos_Validos_Governador, Voto_Branco_Presidente, Voto_Nulo_Presidente, Votos_Validos_Presidente, lista_Voto_Presidente, lista_Voto_Governador, lista_Voto_Prefeito
+    global Voto_Branco_Prefeito, Voto_Nulo_Prefeito, Votos_Validos_Prefeito, Voto_Branco_Governador, Voto_Nulo_Governador, Votos_Validos_Governador, Voto_Branco_Presidente, Voto_Nulo_Presidente, Votos_Validos_Presidente, lista_Voto_Presidente, lista_Voto_Governador, lista_Voto_Prefeito, lista_eleitores
     while True:
         nome = input('Digite o nome do eleitor: ').upper()
         if nome in lista_eleitores:
@@ -308,38 +310,39 @@ def Resultado():
     print('-'*66)
 
 def partido_mais_frequente(lista):
-    partidos = [partido for _, _, partido in lista]
+    partidos = [partido for _, _, partido, _, _ in lista]
     contador = Counter(partidos)
-    partido, frequencia = contador.most_common(1)[0]
-    return partido, frequencia
+    partido = contador.most_common(1)[0]
+    return partido
 
 def partido_menos_frequente(lista):
-    partidos = [partido for _, _, partido in lista]
+    partidos = [partido for _, _, partido, _, _ in lista]
     contador = Counter(partidos)
-    partido, frequencia = contador.most_common()[-1]
-    return partido, frequencia
+    partido = contador.most_common()[-1]
+    return partido
 
-def Relatorio(): #Função relatório ainda não funciona
-    global partido_mais_frequente
-    global partido_menos_frequente
-    print(f'Lista de eleitores que votaram: {lista_eleitores.sort()}')
-    print(f'O total de votos para um candidato é{Votos_Validos_Prefeito + Voto_Nulo_Prefeito + Voto_Branco_Prefeito} e a quantidade de eleitores é {len(lista_eleitores)}')
+def Relatorio():
+    global partido_mais_frequente, partido_menos_frequente, lista_eleitores
+    lista_eleitores.sort()
+    lista_eleitores_ordenada = lista_eleitores
+    print(f'Lista de eleitores que votaram: {lista_eleitores_ordenada}')   # defeito na contagem
+    print(f'O total de votos para um candidato é {Votos_Validos_Prefeito[0] + Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0]} e a quantidade de eleitores é {len(lista_eleitores)}')
 
     # Combinação de todas as listas de votos
     todas_listas = []
-    todas_listas.extend(lista_Voto_Presidente[0])
-    todas_listas.extend(lista_Voto_Governador[0])
-    todas_listas.extend(lista_Voto_Prefeito[0])
+    todas_listas.extend(lista_Voto_Presidente)
+    todas_listas.extend(lista_Voto_Governador)
+    todas_listas.extend(lista_Voto_Prefeito)
 
     # Calculando o partido mais frequente
-    partido_mais_frequente, frequencia_mais = partido_mais_frequente(todas_listas)
+    partido_mais_frequente = partido_mais_frequente(todas_listas)
 
     # Calculando o partido menos frequente
-    partido_menos_frequente, frequencia_menos = partido_menos_frequente(todas_listas)
+    partido_menos_frequente = partido_menos_frequente(todas_listas)
 
     # Exibindo o resultado
-    print(f'O partido mais frequente é {partido_mais_frequente} com {frequencia_mais} ocorrências')
-    print(f'O partido menos frquente é {partido_menos_frequente} com {frequencia_menos} ocorrências')
+    print(f'O partido mais frequente é {partido_mais_frequente}')
+    print(f'O partido menos frquente é {partido_menos_frequente}')
 
 # sistema
 while True:
