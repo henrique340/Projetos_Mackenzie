@@ -347,6 +347,7 @@ def Relatorio():
 # sistema
 while True:
     Menu()
+    print(lista_Voto_Presidente)
     opc = int(input('Digite sua escolha: '))
     if opc == 1:
         Cadastro_Candidatos()
