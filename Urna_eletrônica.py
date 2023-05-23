@@ -4,6 +4,7 @@ from operator import itemgetter
 from collections import Counter
 
 # Listas
+var = 0
 lista_Candidatos_Governador = []
 Partidos_Governador = []
 lista_Voto_Governador = []
@@ -86,7 +87,7 @@ def Cadastrar_Eleitores():
             print('Erro, tente novamente')
 
 def Votar():
-    global Voto_Branco_Prefeito, Voto_Nulo_Prefeito, Votos_Validos_Prefeito, Voto_Branco_Governador, Voto_Nulo_Governador, Votos_Validos_Governador, Voto_Branco_Presidente, Voto_Nulo_Presidente, Votos_Validos_Presidente, lista_Voto_Presidente, lista_Voto_Governador, lista_Voto_Prefeito, lista_eleitores
+    global var,lista_Candidatos_Presidente, lista_Candidatos_Prefeito, lista_Candidatos_Governador, Voto_Branco_Prefeito, Voto_Nulo_Prefeito, Votos_Validos_Prefeito, Voto_Branco_Governador, Voto_Nulo_Governador, Votos_Validos_Governador, Voto_Branco_Presidente, Voto_Nulo_Presidente, Votos_Validos_Presidente, lista_Voto_Presidente, lista_Voto_Governador, lista_Voto_Prefeito, lista_eleitores
     while True:
         nome = input('Digite o nome do eleitor: ').upper()
         if nome in lista_eleitores:
@@ -126,7 +127,7 @@ def Votar():
                     confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
                     if confirmacao == 'SIM':
                         Votos_Validos_Prefeito[0] += 1
-                        lista_Voto_Prefeito = [[candidato, 0, '', 'PREFEITO', 0] for candidato in lista_Candidatos_Prefeito]
+                        lista_Voto_Prefeito = [[candidato, 0, '', 'PREFEITO', 0] for candidato in lista_Candidatos_Prefeito] #sempre que faz essa parte, reseta os votos
                         for i in range(len(lista_Candidatos_Prefeito)):
                             if lista_Voto_Prefeito[i][0] == lista_Candidatos_Prefeito[voto_prefeito]:
                                 lista_Voto_Prefeito[i] = [lista_Voto_Prefeito[i][0], i, Partidos_Prefeito[i], 'PREFEITO', lista_Voto_Prefeito[i][4]+1]
@@ -224,7 +225,7 @@ def Votar():
                     confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
                     if confirmacao == 'SIM':
                         Votos_Validos_Presidente[0] += 1
-                        lista_Voto_Presidente = [[candidato, 0, '', 'PRESIDENTE', 0] for candidato in lista_Candidatos_Presidente]
+                        lista_Voto_Presidente = [[candidato, 0, '', 'PRESIDENTE', var] for candidato in lista_Candidatos_Presidente]
                         for i in range(len(lista_Candidatos_Presidente)):
                             if lista_Voto_Presidente[i][0] == lista_Candidatos_Presidente[voto_presidente]:
                                 lista_Voto_Presidente[i] = [lista_Voto_Presidente[i][0], i, Partidos_Presidente[i],'PRESIDENTE', lista_Voto_Presidente[i][4] + 1]
