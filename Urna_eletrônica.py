@@ -31,9 +31,11 @@ eleitores_novo = []
 lista_eleitores = []
 
 # Funções
+
+# Função Menu
 def Menu():
     print('-'*66)
-    print('{:^66}'.format('MENU'))
+    print('{:^66}'.format('MENU')) # Imprime o texto "MENU" centralizado em uma linha com 66 caracteres
     print('-' * 66)
     print('''1. Cadastrar candidatos
 2. Cadastrar eleitores 
@@ -287,8 +289,7 @@ def Resultado():
     print('-' * 66)
     ranking_presidente = sorted(lista_Voto_Presidente, key=itemgetter(4), reverse=True)
     for count, (candidato, numero, partido, cargo, votos) in enumerate(ranking_presidente, start=1):
-        total = 100*votos/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0])
-        print('|{:^11} |{:>9}    |{:>15,.2f}   |{:>15,.2f}   |   '.format(candidato, partido, votos, total))
+        print('|{:^11} |{:>9}    |{:>15,.2f}   |{:>15,.2f}   |   '.format(candidato, partido, votos, 100*votos/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0])))
     print('-'*66)
     print(f'| Total de votos = {Votos_Validos_Presidente[0]+Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]}\t\t\t\t\t\t\t\t\t\t\t |')
     print('-' * 66)
@@ -309,8 +310,7 @@ def Resultado():
     ranking_governador = sorted(lista_Voto_Governador, key=itemgetter(4), reverse=True)
     count = 1
     for count, (candidato, numero, partido, cargo, votos) in enumerate(ranking_governador, start=1):
-        porcentagem = 100 * votos / (Voto_Nulo_Governador[0] + Voto_Branco_Governador[0] + Votos_Validos_Governador[0])
-        print('|{:^11} |{:>9}    |{:>15,.2f}   |{:>15,.2f}   |   '.format(candidato, partido, votos, porcentagem))
+        print('|{:^11} |{:>9}    |{:>15,.2f}   |{:>15,.2f}   |   '.format(candidato, partido, votos, 100 * votos / (Voto_Nulo_Presidente[0] + Voto_Branco_Presidente[0] + Votos_Validos_Presidente[0])))
     print('-' * 66)
     print(f'| Total de votos = {Votos_Validos_Governador[0] + Voto_Nulo_Governador[0] + Voto_Branco_Governador[0]}\t\t\t\t\t\t\t\t\t\t\t |')
     print('-' * 66)
@@ -331,8 +331,7 @@ def Resultado():
     ranking_prefeito = sorted(lista_Voto_Prefeito, key=itemgetter(4), reverse=True)
     count = 1
     for count, (candidato, numero, partido, cargo, votos) in enumerate(ranking_prefeito, start=1):
-        total = 100 * votos / (Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0] + Votos_Validos_Prefeito[0])
-        print('|{:^11} |{:>9}    |{:>15}   |{:>15,.2f}   |   '.format(candidato, partido, votos, total))
+        print('|{:^11} |{:>9}    |{:>15,.2f}   |{:>15,.2f}   |   '.format(candidato, partido, votos, 100 * votos / (Voto_Nulo_Presidente[0] + Voto_Branco_Presidente[0] + Votos_Validos_Presidente[0])))
     print('-' * 66)
     print(f'| Total de votos = {Votos_Validos_Prefeito[0] + Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0]}\t\t\t\t\t\t\t\t\t\t\t |')
     print('-'*66)
