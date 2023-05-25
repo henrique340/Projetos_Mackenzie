@@ -27,7 +27,7 @@ lista_Voto_Prefeito = []
 Voto_Branco_Prefeito = [0]
 Voto_Nulo_Prefeito = [0]
 Votos_Validos_Prefeito = [0]
-
+eleitores_novo = []
 lista_eleitores = []
 
 # Funções
@@ -91,6 +91,7 @@ def Cadastrar_Eleitores():
         nome = input('Digite o nome do eleitor: ').upper()
         if nome.isalpha():
             lista_eleitores.append(nome)
+            eleitores_novo.append(nome)
             while True:
                 cpf = input('Digite o CPF do eleitor: ')
                 if len(cpf) == 11:
@@ -111,10 +112,11 @@ def Votar():
     print('-' * 66)
     print('{:^66}'.format('VOTAÇÃO'))
     print('-'*66)
-    print(f'lista de eleitores: {lista_eleitores}')
+    print(f'lista de eleitores: {eleitores_novo}')
     while True:
         nome = input('Digite o nome do eleitor: ').upper()
         if nome in lista_eleitores:
+            eleitores_novo.remove(nome)
             # prefeito
 
             while True:
@@ -129,7 +131,7 @@ def Votar():
                 if voto_prefeito == -1:
                     print(f'O eleitor {nome} votou em branco')
                     confirmacao = input('Deseja confirmar o voto? [Sim]/Não] ').upper()
-                    if confirmacao ==  'SIM':
+                    if confirmacao == 'SIM':
                         Voto_Branco_Prefeito[0] += 1
                         break
                     elif confirmacao == 'NAO':
@@ -357,6 +359,9 @@ def Relatorio():
     global partido_mais_frequente, partido_menos_frequente, lista_eleitores
     lista_eleitores.sort()
     lista_eleitores_ordenada = lista_eleitores
+    print('-'*66)
+    print('{:^66}'.format('RELATÓRIO'))
+    print('-'*66)
     print(f'Lista de eleitores que votaram: {lista_eleitores_ordenada}')   # defeito na contagem
     print(f'O total de votos para um candidato é {Votos_Validos_Prefeito[0] + Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0]} e a quantidade de eleitores é {len(lista_eleitores)}')
 
@@ -377,8 +382,6 @@ def Relatorio():
     print(f'O partido menos frquente é {partido_menos_frequente}')
 
 # sistema
-
-
 while True:
     Menu()
     opc = int(input('Digite sua escolha: '))
