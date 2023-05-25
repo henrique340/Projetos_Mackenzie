@@ -30,8 +30,6 @@ Votos_Validos_Prefeito = [0]
 eleitores_novo = []
 lista_eleitores = []
 
-# Funções
-
 # Função Menu
 def Menu():
     print('-'*66)
