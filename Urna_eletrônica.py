@@ -281,7 +281,7 @@ def Resultado():
     global lista_Voto_Presidente, lista_Voto_Governador, lista_Voto_Prefeito
     # presidente
     print('-' * 66)
-    print('|            RANKING DO RESULTADO PARA PRESIDENTE                |')
+    print('|{:^66}'.format('RANKING DO RESULTADO PARA PRESIDENTE|'))
     print('-' * 66)
     print('|    Nome    |   Partido   |  Total de votos  |  % votos válidos |')
     print('-' * 66)
@@ -301,7 +301,7 @@ def Resultado():
 
     # governador
     print('-' * 66)
-    print('|            RANKING DO RESULTADO PARA GOVERNADOR                |')
+    print('|{:^66}'.format('RANKING DO RESULTADO PARA GOVERNADOR|'))
     print('-' * 66)
     print('|    Nome    |   Partido   |  Total de votos  |  % votos válidos |')
     print('-' * 66)
@@ -322,7 +322,7 @@ def Resultado():
 
     # prefeito
     print('-' * 66)
-    print('|            RANKING DO RESULTADO PARA PREFEITO                  |')
+    print('|{:^66}'.format('RANKING DO RESULTADO PARA PREFEITO|'))
     print('-' * 66)
     print('|    Nome    |   Partido   |  Total de votos  |  % votos válidos |')
     print('-' * 66)
@@ -359,7 +359,7 @@ def Relatorio():
     print('-'*66)
     print('{:^66}'.format('RELATÓRIO'))
     print('-'*66)
-    print(f'Lista de eleitores que votaram: {lista_eleitores_ordenada}')   # defeito na contagem
+    print(f'Lista de eleitores que votaram: {lista_eleitores_ordenada}')
     print(f'O total de votos para um candidato é {Votos_Validos_Prefeito[0] + Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0]} e a quantidade de eleitores é {len(lista_eleitores)}')
 
     # Combinação de todas as listas de votos
