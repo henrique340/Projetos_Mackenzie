@@ -27,20 +27,27 @@ lista_Voto_Prefeito = []
 Voto_Branco_Prefeito = [0]
 Voto_Nulo_Prefeito = [0]
 Votos_Validos_Prefeito = [0]
-
+eleitores_novo = []
 lista_eleitores = []
 
 # Funções
 def Menu():
+    print('-'*66)
+    print('{:^66}'.format('MENU'))
+    print('-' * 66)
     print('''1. Cadastrar candidatos
-   2. Cadastrar eleitores 
-   3. Votar
-   4. Apurar resultados
-   5. Relatório estatísticas 
-   6. Encerrar ''')
+2. Cadastrar eleitores 
+3. Votar
+4. Apurar resultados
+5. Relatório estatísticas 
+6. Encerrar ''')
 
 def Cadastro_Candidatos():
     while True:
+        print()
+        print('-' * 66)
+        print('{:^66}'.format('CADASTRO DE CANDIDATOS'))
+        print('-' * 66)
         nome = input('Digite o nome do candidato: ').upper()
         while True:
             cargo = input('Digite o cargo do candidato: ').upper()
@@ -50,6 +57,7 @@ def Cadastro_Candidatos():
                 partido = input('Digite o partido do candidato: ').upper()
                 Partidos_Governador.append(partido)
                 print(f'O candidato {nome} do numero {numero}, do partido {partido} e do cargo {cargo} foi adicionado com sucesso')
+                lista_Voto_Governador.append(nome)
                 break
             elif cargo == 'PREFEITO':
                 lista_Candidatos_Prefeito.append(nome)
@@ -57,6 +65,7 @@ def Cadastro_Candidatos():
                 partido = input('Digite o partido do candidato: ').upper()
                 Partidos_Prefeito.append(partido)
                 print(f'O candidato {nome} do numero {numero}, do partido {partido} e do cargo {cargo} foi adicionado com sucesso')
+                lista_Voto_Prefeito.append(nome)
                 break
             elif cargo == 'PRESIDENTE':
                 lista_Candidatos_Presidente.append(nome)
@@ -64,6 +73,7 @@ def Cadastro_Candidatos():
                 partido = input('Digite o partido do candidato: ').upper()
                 Partidos_Presidente.append(partido)
                 print(f'O candidato {nome} do numero {numero}, do partido {partido} e do cargo {cargo} foi adicionado com sucesso')
+                lista_Voto_Presidente.append(nome)
                 break
             else:
                 print('Insira um cargo válido: ')
@@ -72,8 +82,12 @@ def Cadastro_Candidatos():
             break
 
 def Cadastrar_Eleitores():
-    global lista_eleitores
+    global lista_eleitores, eleitores_novo
     while True:
+        print()
+        print('-' * 66)
+        print('{:^66}'.format('CADASTRO DE ELEITORES'))
+        print('-' * 66)
         nome = input('Digite o nome do eleitor: ').upper()
         if nome.isalpha():
             lista_eleitores.append(nome)
@@ -93,15 +107,20 @@ def Cadastrar_Eleitores():
 
 def Votar():
     global count_gov, count_pref, count_pres, Voto_Branco_Prefeito, Voto_Nulo_Prefeito, Votos_Validos_Prefeito, Voto_Branco_Governador, Voto_Nulo_Governador, Votos_Validos_Governador, Voto_Branco_Presidente, Voto_Nulo_Presidente, Votos_Validos_Presidente, lista_Voto_Presidente, lista_Voto_Governador, lista_Voto_Prefeito, lista_eleitores, lista_Candidatos_Prefeito, lista_Candidatos_Presidente, lista_Candidatos_Governador
+    print()
+    print('-' * 66)
+    print('{:^66}'.format('VOTAÇÃO'))
+    print('-'*66)
+    print(f'lista de eleitores: {lista_eleitores}')
     while True:
         nome = input('Digite o nome do eleitor: ').upper()
         if nome in lista_eleitores:
             # prefeito
 
             while True:
-                print('-' * 45)
-                print('Votação Prefeito')
-                print('-' * 45)
+                print('-' * 66)
+                print('{:^66}'.format('Votação Prefeito'))
+                print('-' * 66)
                 print('Para votar branco [vote -1]')
                 print('Para votar nulo [vote -2]')
                 for i, candidato in enumerate(lista_Candidatos_Prefeito):
@@ -133,12 +152,13 @@ def Votar():
                     if confirmacao == 'SIM':
                         Votos_Validos_Prefeito[0] += 1
                         for i in range(len(lista_Candidatos_Prefeito)):
-                            if lista_Candidatos_Prefeito[i] not in lista_Voto_Prefeito[i][0]:
-                                lista_Voto_Prefeito.append([lista_Candidatos_Prefeito[i], i, Partidos_Prefeito[i], 'PREFEITO', 0])
+                            if lista_Candidatos_Prefeito[i] == lista_Voto_Prefeito[i]:
+                                lista_Voto_Prefeito.remove(lista_Candidatos_Prefeito[i])
+                                lista_Voto_Prefeito.insert(i, [lista_Candidatos_Prefeito[i], i, Partidos_Prefeito[i], 'PREFEITO', 0])
                             if lista_Candidatos_Prefeito[i] == lista_Voto_Prefeito[i][0]:
-                                lista_Voto_Prefeito[i] = [lista_Voto_Prefeito[i][0], i, Partidos_Prefeito[i], 'PREFEITO', lista_Voto_Prefeito[i][4] + 1]
+                                lista_Voto_Prefeito[i] = [lista_Candidatos_Prefeito[i], i, Partidos_Prefeito[i], 'PREFEITO', lista_Voto_Prefeito[i][4] + 1]
                             else:
-                                lista_Voto_Prefeito[i] = [lista_Voto_Prefeito[i][0], i, Partidos_Prefeito[i],'PREFEITO', lista_Voto_Prefeito[i][4]]
+                                lista_Voto_Prefeito[i] = [lista_Candidatos_Prefeito[i], i, Partidos_Prefeito[i],'PREFEITO', lista_Voto_Prefeito[i][4]]
                         break
                     elif confirmacao == 'NAO':
                         print('Voto cancelado')
@@ -147,9 +167,9 @@ def Votar():
 
             # governador
             while True:
-                print('-' * 45)
-                print('Votação Governador')
-                print('-' * 45)
+                print('-' * 66)
+                print('{:^66}'.format('Votação Governador'))
+                print('-' * 66)
                 print('Para votar branco [vote -1]')
                 print('Para votar nulo [vote -2]')
                 for i, candidato in enumerate(lista_Candidatos_Governador):
@@ -181,12 +201,13 @@ def Votar():
                     if confirmacao == 'SIM':
                         Votos_Validos_Governador[0] += 1
                         for i in range(len(lista_Candidatos_Governador)):
-                            if lista_Candidatos_Governador[i] not in lista_Voto_Governador[i][0]:
-                                lista_Voto_Governador.append([lista_Candidatos_Governador[i], i, Partidos_Governador[i], 'GOVERNADOR', 0])
+                            if lista_Candidatos_Governador[i] == lista_Voto_Governador[i]:
+                                lista_Voto_Governador.remove(lista_Candidatos_Governador[i])
+                                lista_Voto_Governador.insert(i, [lista_Candidatos_Governador[i], i, Partidos_Governador[i], 'GOVERNADOR', 0])
                             if lista_Candidatos_Governador[i] == lista_Voto_Governador[i][0]:
-                                lista_Voto_Governador[i] = [lista_Voto_Governador[i][0], i, Partidos_Governador[i],'PREFEITO', lista_Voto_Governador[i][4] + 1]
+                                lista_Voto_Governador[i] = [lista_Candidatos_Governador[i], i, Partidos_Governador[i],'PREFEITO', lista_Voto_Governador[i][4] + 1]
                             else:
-                                lista_Voto_Governador[i] = [lista_Voto_Governador[i][0], i, Partidos_Governador[i],'GOVERNADOR', lista_Voto_Governador[i][4]]
+                                lista_Voto_Governador[i] = [lista_Candidatos_Governador[i], i, Partidos_Governador[i],'GOVERNADOR', lista_Voto_Governador[i][4]]
                         break
                     elif confirmacao == 'NAO':
                         print('Voto cancelado')
@@ -195,9 +216,9 @@ def Votar():
 
             # presidente
             while True:
-                print('-' * 45)
-                print('Votação Presidente')
-                print('-' * 45)
+                print('-' * 66)
+                print('{:^66}'.format('Votação Presidente'))
+                print('-' * 66)
                 print('Para votar branco [vote -1]')
                 print('Para votar nulo [vote -2]')
                 for i, candidato in enumerate(lista_Candidatos_Presidente):
@@ -233,12 +254,13 @@ def Votar():
                     if confirmacao == 'SIM':
                         Votos_Validos_Presidente[0] += 1
                         for i in range(len(lista_Candidatos_Presidente)):
-                            if lista_Candidatos_Presidente[i] not in lista_Voto_Presidente[i][0]:
-                                lista_Voto_Presidente.append([lista_Candidatos_Presidente[i], i, Partidos_Presidente[i],'PRESIDENTE', 0])
+                            if lista_Candidatos_Presidente[i] == lista_Voto_Presidente[i]:
+                                lista_Voto_Presidente.remove(lista_Candidatos_Presidente[i])
+                                lista_Voto_Presidente.insert(i, [lista_Candidatos_Presidente[i], i, Partidos_Presidente[i],'PRESIDENTE', 0])
                             if lista_Voto_Presidente[i][0] == lista_Candidatos_Presidente[voto_presidente]:
-                                lista_Voto_Presidente[i] = [lista_Voto_Presidente[i][0], i, Partidos_Presidente[i],'PRESIDENTE', lista_Voto_Presidente[i][4] + 1]
+                                lista_Voto_Presidente[i] = [lista_Candidatos_Presidente[i], i, Partidos_Presidente[i],'PRESIDENTE', lista_Voto_Presidente[i][4] + 1]
                             else:
-                                lista_Voto_Presidente[i] = [lista_Voto_Presidente[i][0], i, Partidos_Presidente[i],'PRESIDENTE', lista_Voto_Presidente[i][4]]
+                                lista_Voto_Presidente[i] = [lista_Candidatos_Presidente[i], i, Partidos_Presidente[i],'PRESIDENTE', lista_Voto_Presidente[i][4]]
                         print('Voto sendo adicionado')
                         sleep(2)
                         print('-' * 45)
@@ -259,20 +281,20 @@ def Resultado():
     print('-' * 66)
     print('|            RANKING DO RESULTADO PARA PRESIDENTE                |')
     print('-' * 66)
-    print('|   Nome   |   Partido  |  Total de votos  |   % votos válidos   |')
+    print('|    Nome    |   Partido  |  Total de votos  |   % votos válidos   |')
     print('-' * 66)
     ranking_presidente = sorted(lista_Voto_Presidente, key=itemgetter(4), reverse=True)
     count = 1
     for count, (candidato, numero, partido, cargo, votos) in enumerate(ranking_presidente, start=1):
-        print(f'{count} {candidato}|{partido}|{votos}|{100*votos/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0]):,.2f}')
+        print(f'|\t{candidato}\t|\t{partido}\t|\t{votos}\t|\t{100*votos/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0]):,.2f}\t|')
     print('-'*66)
-    print(f'| Total de votos = {Votos_Validos_Presidente[0]+Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]}|')
+    print(f'| Total de votos = {Votos_Validos_Presidente[0]+Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]}\t\t\t\t|')
     print('-' * 66)
-    print(f'| Total de votos válidos = {Votos_Validos_Presidente[0]} e % {100*Votos_Validos_Presidente[0]/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0]):,.2f} do total |')
+    print(f'| Total de votos válidos = {Votos_Validos_Presidente[0]} e % {100*Votos_Validos_Presidente[0]/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0]):,.2f} do total\t\t |')
     print('-' * 66)
-    print(f'| Total de votos brancos = {Voto_Branco_Presidente[0]} e % {100*Voto_Branco_Presidente[0]/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0]):,.2f} do total |')
+    print(f'| Total de votos brancos = {Voto_Branco_Presidente[0]} e % {100*Voto_Branco_Presidente[0]/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0]):,.2f} do total\t\t |')
     print('-' * 66)
-    print(f'| Total de votos nulos = {Voto_Nulo_Presidente[0]} e % {100*Voto_Nulo_Presidente[0]/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0]):,.2f} do total |')
+    print(f'| Total de votos nulos = {Voto_Nulo_Presidente[0]} e % {100*Voto_Nulo_Presidente[0]/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0]):,.2f} do total\t\t |')
     print('-' * 66)
     print('\n')
 
@@ -358,8 +380,6 @@ def Relatorio():
 
 while True:
     Menu()
-    print(lista_Candidatos_Presidente)
-    print(lista_Voto_Presidente)
     opc = int(input('Digite sua escolha: '))
     if opc == 1:
         Cadastro_Candidatos()

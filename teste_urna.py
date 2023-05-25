@@ -252,24 +252,25 @@ def Votar():
         break
 
 def Resultado():
+    global lista_Voto_Presidente, lista_Voto_Governador, lista_Voto_Prefeito
     # presidente
     print('-' * 66)
     print('|            RANKING DO RESULTADO PARA PRESIDENTE                |')
     print('-' * 66)
-    print('|   Nome   |   Partido  |  Total de votos  |   % votos válidos   |')
+    print('|    Nome    |   Partido   |  Total de votos  |  % votos válidos |')
     print('-' * 66)
     ranking_presidente = sorted(lista_Voto_Presidente, key=itemgetter(4), reverse=True)
-    count = 1
     for count, (candidato, numero, partido, cargo, votos) in enumerate(ranking_presidente, start=1):
-        print(f'{count} {candidato} | {partido} | {votos} | {100*votos/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0])}')
+        total = 100*votos/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0])
+        print('|{:^11} |{:>9}    |{:>15,.2f}   |{:>15,.2f}   |   '.format(candidato, partido, votos, total))
     print('-'*66)
-    print(f'| Total de votos = {Votos_Validos_Presidente[0]+Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]}|')
+    print(f'| Total de votos = {Votos_Validos_Presidente[0]+Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]}\t\t\t\t\t\t\t\t\t\t\t |')
     print('-' * 66)
-    print(f'| Total de votos válidos = {Votos_Validos_Presidente[0]} e % {100*Votos_Validos_Presidente[0]/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0])} do total |')
+    print(f'| Total de votos válidos = {Votos_Validos_Presidente[0]} e % {100*Votos_Validos_Presidente[0]/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0]):,.2f} do total\t\t\t\t\t |')
     print('-' * 66)
-    print(f'| Total de votos brancos = {Voto_Branco_Presidente[0]} e % {100*Voto_Branco_Presidente[0]/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0])} do total |')
+    print(f'| Total de votos brancos = {Voto_Branco_Presidente[0]} e % {100*Voto_Branco_Presidente[0]/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0]):,.2f} do total\t\t\t\t\t |')
     print('-' * 66)
-    print(f'| Total de votos nulos = {Voto_Nulo_Presidente[0]} e % {100*Voto_Nulo_Presidente[0]/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0])} do total |')
+    print(f'| Total de votos nulos = {Voto_Nulo_Presidente[0]} e % {100*Voto_Nulo_Presidente[0]/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0]):,.2f} do total\t\t\t\t\t |')
     print('-' * 66)
     print('\n')
 
@@ -277,20 +278,21 @@ def Resultado():
     print('-' * 66)
     print('|            RANKING DO RESULTADO PARA GOVERNADOR                |')
     print('-' * 66)
-    print('|   Nome   |   Partido  |  Total de votos  |   % votos válidos   |')
+    print('|    Nome    |   Partido   |  Total de votos  |  % votos válidos |')
     print('-' * 66)
     ranking_governador = sorted(lista_Voto_Governador, key=itemgetter(4), reverse=True)
     count = 1
     for count, (candidato, numero, partido, cargo, votos) in enumerate(ranking_governador, start=1):
-        print(f'{count} {candidato} | {partido} | {votos} | {100 * votos / (Voto_Nulo_Governador[0] + Voto_Branco_Governador[0] + Votos_Validos_Governador[0])}')
+        porcentagem = 100 * votos / (Voto_Nulo_Governador[0] + Voto_Branco_Governador[0] + Votos_Validos_Governador[0])
+        print('|{:^11} |{:>9}    |{:>15,.2f}   |{:>15,.2f}   |   '.format(candidato, partido, votos, porcentagem))
     print('-' * 66)
-    print(f'| Total de votos = {Votos_Validos_Governador[0] + Voto_Nulo_Governador[0] + Voto_Branco_Governador[0]}|')
+    print(f'| Total de votos = {Votos_Validos_Governador[0] + Voto_Nulo_Governador[0] + Voto_Branco_Governador[0]}\t\t\t\t\t\t\t\t\t\t\t |')
     print('-' * 66)
-    print(f'| Total de votos válidos = {Votos_Validos_Governador[0]} e % {100 * Votos_Validos_Governador[0] / (Voto_Nulo_Governador[0] + Voto_Branco_Governador[0] + Votos_Validos_Governador[0])} do total |')
+    print(f'| Total de votos válidos = {Votos_Validos_Governador[0]} e % {100 * Votos_Validos_Governador[0] / (Voto_Nulo_Governador[0] + Voto_Branco_Governador[0] + Votos_Validos_Governador[0]):,.2f} do total\t\t\t\t\t |')
     print('-' * 66)
-    print(f'| Total de votos brancos = {Voto_Branco_Governador[0]} e % {100 * Voto_Branco_Governador[0] / (Voto_Nulo_Governador[0] + Voto_Branco_Governador[0] + Votos_Validos_Governador[0])} do total |')
+    print(f'| Total de votos brancos = {Voto_Branco_Governador[0]} e % {100 * Voto_Branco_Governador[0] / (Voto_Nulo_Governador[0] + Voto_Branco_Governador[0] + Votos_Validos_Governador[0]):,.2f} do total\t\t\t\t\t |')
     print('-' * 66)
-    print(f'| Total de votos nulos = {Voto_Nulo_Governador[0]} e % {100 * Voto_Nulo_Governador[0] / (Voto_Nulo_Governador[0] + Voto_Branco_Governador[0] + Votos_Validos_Governador[0])} do total |')
+    print(f'| Total de votos nulos = {Voto_Nulo_Governador[0]} e % {100 * Voto_Nulo_Governador[0] / (Voto_Nulo_Governador[0] + Voto_Branco_Governador[0] + Votos_Validos_Governador[0]):,.2f} do total\t\t\t\t\t |')
     print('-' * 66)
     print('\n')
 
@@ -298,20 +300,21 @@ def Resultado():
     print('-' * 66)
     print('|            RANKING DO RESULTADO PARA PREFEITO                  |')
     print('-' * 66)
-    print('|   Nome   |   Partido  |  Total de votos  |   % votos válidos   |')
+    print('|    Nome    |   Partido   |  Total de votos  |  % votos válidos |')
     print('-' * 66)
     ranking_prefeito = sorted(lista_Voto_Prefeito, key=itemgetter(4), reverse=True)
     count = 1
     for count, (candidato, numero, partido, cargo, votos) in enumerate(ranking_prefeito, start=1):
-        print(f'{count} {candidato} | {partido} | {votos} | {100 * votos / (Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0] + Votos_Validos_Prefeito[0]):,.2f} |')
+        total = 100 * votos / (Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0] + Votos_Validos_Prefeito[0])
+        print('|{:^11} |{:>9}    |{:>15}   |{:>15,.2f}   |   '.format(candidato, partido, votos, total))
     print('-' * 66)
-    print(f'| Total de votos = {Votos_Validos_Prefeito[0] + Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0]} |')
+    print(f'| Total de votos = {Votos_Validos_Prefeito[0] + Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0]}\t\t\t\t\t\t\t\t\t\t\t |')
     print('-'*66)
-    print(f'| Total de votos válidos = {Votos_Validos_Prefeito[0]} e % {100 * Votos_Validos_Prefeito[0] / (Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0] + Votos_Validos_Prefeito[0])} do total |')
+    print(f'| Total de votos válidos = {Votos_Validos_Prefeito[0]} e % {100 * Votos_Validos_Prefeito[0] / (Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0] + Votos_Validos_Prefeito[0]):,.2f} do total\t\t\t\t\t |')
     print('-'*66)
-    print(f'| Total de votos brancos = {Voto_Branco_Prefeito[0]} e % {100 * Voto_Branco_Prefeito[0] / (Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0] + Votos_Validos_Prefeito[0])} do total  |')
+    print(f'| Total de votos brancos = {Voto_Branco_Prefeito[0]} e % {100 * Voto_Branco_Prefeito[0] / (Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0] + Votos_Validos_Prefeito[0]):,.2f} do total\t\t\t\t\t |')
     print('-'*66)
-    print(f'| Total de votos nulos = {Voto_Nulo_Prefeito[0]} e % {100 * Voto_Nulo_Prefeito[0] / (Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0] + Votos_Validos_Prefeito[0])} do total       |')
+    print(f'| Total de votos nulos = {Voto_Nulo_Prefeito[0]} e % {100 * Voto_Nulo_Prefeito[0] / (Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0] + Votos_Validos_Prefeito[0]):,.2f} do total\t\t\t\t\t |')
     print('-'*66)
 
 def partido_mais_frequente(lista):
