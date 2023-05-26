@@ -1,47 +1,57 @@
-#bibliotecas
+# Projeto N2 - SIMULADOR DE UM SISTEMA DE VOTAÇÃO
+
+#Leonardo Patriani Cardoso - 32319551
+#Henrique Yuji Isogai Yoneoka - 32340044
+#Lucas Bonna Favaro - 32318588
+#Vinicius Vasconcelos de Freitas - 42275555
+
+#Bibliotecas usadas na aplicação
 from time import sleep
 from operator import itemgetter
 from collections import Counter
 
-# Listas
+# Listas usadas na aplicação
 count_pref = 0
 count_gov = 0
 count_pres = 0
+CPF = []
 lista_Candidatos_Governador = []
 Partidos_Governador = []
-lista_Voto_Governador = []
+lista_Voto_Governador = [] #Listas usadas para diferenciar eleitores que votaram dos que nao votaram + dados para os relatorios
 Voto_Branco_Governador = [0]
 Voto_Nulo_Governador = [0]
 Votos_Validos_Governador = [0]
 
 lista_Candidatos_Presidente = []
 Partidos_Presidente = []
-lista_Voto_Presidente = []
+lista_Voto_Presidente = [] #Listas usadas para diferenciar eleitores que votaram dos que nao votaram + dados para os relatorios
 Voto_Branco_Presidente = [0]
 Voto_Nulo_Presidente = [0]
 Votos_Validos_Presidente = [0]
 
 lista_Candidatos_Prefeito = []
 Partidos_Prefeito = []
-lista_Voto_Prefeito = []
+lista_Voto_Prefeito = [] #Listas usadas para diferenciar eleitores que votaram dos que nao votaram + dados para os relatorios
 Voto_Branco_Prefeito = [0]
 Voto_Nulo_Prefeito = [0]
 Votos_Validos_Prefeito = [0]
+#listas de candidatos para que seja feita posteriormente a apuração do total de votos
 eleitores_novo = []
 lista_eleitores = []
 
-# Função Menu
+# Função CLI do Menu-inicial
 def Menu():
     print('-'*66)
-    print('{:^66}'.format('MENU')) # Imprime o texto "MENU" centralizado em uma linha com 66 caracteres
+    print('{:^66}'.format('+++++++ MENU - SIMULADOR DO SISTEMA DE VOTAÇÃO +++++++')) # Imprime o texto "MENU" centralizado em uma linha com 66 caracteres
     print('-' * 66)
-    print('''1. Cadastrar candidatos
-2. Cadastrar eleitores 
+    print('''1. Cadastrar Candidatos
+2. Cadastrar Eleitores 
 3. Votar
 4. Apurar resultados
-5. Relatório estatísticas 
+5. Relatórios e Estatísticas 
 6. Encerrar ''')
 
+# Função de cadastro para os canditados
 def Cadastro_Candidatos():
     while True:
         print()
@@ -81,6 +91,7 @@ def Cadastro_Candidatos():
         if opc == 'NAO':
             break
 
+# Função para cadastro de eleitores
 def Cadastrar_Eleitores():
     global lista_eleitores, eleitores_novo
     while True:
@@ -95,9 +106,13 @@ def Cadastrar_Eleitores():
             while True:
                 cpf = input('Digite o CPF do eleitor: ')
                 if len(cpf) == 11:
-                    print(f'o eleitor {nome} de cpf {cpf} foi adicionado com sucesso')
-                    print(lista_eleitores)
-                    break
+                    if cpf not in CPF:
+                        CPF.append(cpf)
+                        print(f'o eleitor {nome} de cpf {cpf} foi adicionado com sucesso')
+                        print(lista_eleitores)
+                        break
+                    else:
+                        print('Eleitor já foi cadastrado com esse cpf')
                 else:
                     print('Digite um numero de cpf válido')
             opc = input('Deseja cadastrar outro candidato? [Sim]/[Nao] ').upper()
@@ -106,6 +121,7 @@ def Cadastrar_Eleitores():
         else:
             print('Erro, tente novamente')
 
+# Função que realiza os votos (são coletados em 3 etapas: Prefeito -> Governador -> Presidente; ou seja, primeiramente o voto para Prefeito, em seguida para Governador e por fim para Presidente.)
 def Votar():
     global count_gov, count_pref, count_pres, Voto_Branco_Prefeito, Voto_Nulo_Prefeito, Votos_Validos_Prefeito, Voto_Branco_Governador, Voto_Nulo_Governador, Votos_Validos_Governador, Voto_Branco_Presidente, Voto_Nulo_Presidente, Votos_Validos_Presidente, lista_Voto_Presidente, lista_Voto_Governador, lista_Voto_Prefeito, lista_eleitores, lista_Candidatos_Prefeito, lista_Candidatos_Presidente, lista_Candidatos_Governador
     print()
@@ -117,8 +133,7 @@ def Votar():
         nome = input('Digite o nome do eleitor: ').upper()
         if nome in lista_eleitores:
             eleitores_novo.remove(nome)
-            # prefeito
-
+            # Repetição que cadastra os votos para <PREFEITO>
             while True:
                 print('-' * 66)
                 print('{:^66}'.format('Votação Prefeito'))
@@ -130,7 +145,7 @@ def Votar():
                 voto_prefeito = int(input('Digite seu voto: '))
                 if voto_prefeito == -1:
                     print(f'O eleitor {nome} votou em branco')
-                    confirmacao = input('Deseja confirmar o voto? [Sim]/Não] ').upper()
+                    confirmacao = input('Deseja confirmar o voto? [Sim]/[Não]] ').upper()
                     if confirmacao == 'SIM':
                         Voto_Branco_Prefeito[0] += 1
                         break
@@ -150,9 +165,11 @@ def Votar():
                         print('Erro, tente novamente')
                 elif voto_prefeito >= 0:
                     print(f'O número {voto_prefeito} é o candidato {lista_Candidatos_Prefeito[voto_prefeito]} do partido {Partidos_Prefeito[voto_prefeito]}')
-                    confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
+                    confirmacao = input('Deseja confirmar o voto: [Sim]/[Não]] ').upper()
                     if confirmacao == 'SIM':
                         Votos_Validos_Prefeito[0] += 1
+
+                        # Executa/Confirma o voto para o candidato selecionado
                         for i in range(len(lista_Candidatos_Prefeito)):
                             if lista_Candidatos_Prefeito[i] == lista_Voto_Prefeito[i]:
                                 lista_Voto_Prefeito.remove(lista_Candidatos_Prefeito[i])
@@ -167,7 +184,7 @@ def Votar():
                     else:
                         print('opção inválida, tente novamente')
 
-            # governador
+            # Repetição que cadastra os votos para <GOVERNADOR>
             while True:
                 print('-' * 66)
                 print('{:^66}'.format('Votação Governador'))
@@ -179,7 +196,7 @@ def Votar():
                 voto_governador = int(input('Digite seu voto: '))
                 if voto_governador == -1:
                     print(f'O eleitor {nome} votou em branco')
-                    confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
+                    confirmacao = input('Deseja confirmar o voto: [Sim]/[Não]] ').upper()
                     if confirmacao == 'SIM':
                         Voto_Branco_Governador[0] += 1
                         break
@@ -199,15 +216,17 @@ def Votar():
                         print('Erro, tente novamente')
                 elif voto_governador >= 0:
                     print(f'O número {voto_governador} é o candidato {lista_Candidatos_Governador[voto_governador]} do partido {Partidos_Governador[voto_governador]}')
-                    confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
+                    confirmacao = input('Deseja confirmar o voto: [Sim]/[Não]] ').upper()
                     if confirmacao == 'SIM':
                         Votos_Validos_Governador[0] += 1
+
+                        # Executa/Confirma o voto para o candidato selecionado
                         for i in range(len(lista_Candidatos_Governador)):
                             if lista_Candidatos_Governador[i] == lista_Voto_Governador[i]:
                                 lista_Voto_Governador.remove(lista_Candidatos_Governador[i])
                                 lista_Voto_Governador.insert(i, [lista_Candidatos_Governador[i], i, Partidos_Governador[i], 'GOVERNADOR', 0])
                             if lista_Candidatos_Governador[i] == lista_Voto_Governador[i][0]:
-                                lista_Voto_Governador[i] = [lista_Candidatos_Governador[i], i, Partidos_Governador[i],'PREFEITO', lista_Voto_Governador[i][4] + 1]
+                                lista_Voto_Governador[i] = [lista_Candidatos_Governador[i], i, Partidos_Governador[i],'GOVERNADOR', lista_Voto_Governador[i][4] + 1]
                             else:
                                 lista_Voto_Governador[i] = [lista_Candidatos_Governador[i], i, Partidos_Governador[i],'GOVERNADOR', lista_Voto_Governador[i][4]]
                         break
@@ -216,7 +235,7 @@ def Votar():
                     else:
                         print('opção inválida, tente novamente')
 
-            # presidente
+            # Repetição que cadastra os votos para <PRESIDENTE>
             while True:
                 print('-' * 66)
                 print('{:^66}'.format('Votação Presidente'))
@@ -228,7 +247,7 @@ def Votar():
                 voto_presidente = int(input('Digite seu voto: '))
                 if voto_presidente == -1:
                     print(f'O eleitor {nome} votou em branco')
-                    confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
+                    confirmacao = input('Deseja confirmar o voto: [Sim]/[Não]] ').upper()
                     if confirmacao == 'SIM':
                         Voto_Branco_Presidente[0] += 1
                         print('Voto sendo adicionado ...')
@@ -252,9 +271,11 @@ def Votar():
                         print('Erro, tente novamente')
                 elif voto_presidente >= 0:
                     print(f'O número {voto_presidente} é o candidato {lista_Candidatos_Presidente[voto_presidente]} do partido {Partidos_Presidente[voto_presidente]}')
-                    confirmacao = input('Deseja confirmar o voto: [Sim]/Não] ').upper()
+                    confirmacao = input('Deseja confirmar o voto: [Sim]/[Não]] ').upper()
                     if confirmacao == 'SIM':
                         Votos_Validos_Presidente[0] += 1
+
+                        # Executa/Confirma o voto para o candidato selecionado
                         for i in range(len(lista_Candidatos_Presidente)):
                             if lista_Candidatos_Presidente[i] == lista_Voto_Presidente[i]:
                                 lista_Voto_Presidente.remove(lista_Candidatos_Presidente[i])
@@ -277,81 +298,75 @@ def Votar():
             print('Erro, o eleitor não foi cadastrado')
         break
 
+# Apresenta os candidatos vencedores para cada cargos e um ranking ordenado do resultado da eleição (do mais votado para o menos votado) + alguns dados estatísticos
 def Resultado():
     global lista_Voto_Presidente, lista_Voto_Governador, lista_Voto_Prefeito
-    # presidente
+
+    # Tabela - PRESIDENTE
     print('-' * 66)
-    print('|{:^66}'.format('RANKING DO RESULTADO PARA PRESIDENTE|'))
+    print('|            RANKING DO RESULTADO PARA PRESIDENTE                |')
     print('-' * 66)
     print('|    Nome    |   Partido   |  Total de votos  |  % votos válidos |')
     print('-' * 66)
     ranking_presidente = sorted(lista_Voto_Presidente, key=itemgetter(4), reverse=True)
     for count, (candidato, numero, partido, cargo, votos) in enumerate(ranking_presidente, start=1):
         print('|{:^11} |{:>9}    |{:>15,.2f}   |{:>15,.2f}   |   '.format(candidato, partido, votos, 100*votos/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0])))
-    print('-'*66)
-    print(f'| Total de votos = {Votos_Validos_Presidente[0]+Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]}\t\t\t\t\t\t\t\t\t\t\t |')
-    print('-' * 66)
-    print(f'| Total de votos válidos = {Votos_Validos_Presidente[0]} e % {100*Votos_Validos_Presidente[0]/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0]):,.2f} do total\t\t\t\t\t |')
-    print('-' * 66)
-    print(f'| Total de votos brancos = {Voto_Branco_Presidente[0]} e % {100*Voto_Branco_Presidente[0]/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0]):,.2f} do total\t\t\t\t\t |')
-    print('-' * 66)
-    print(f'| Total de votos nulos = {Voto_Nulo_Presidente[0]} e % {100*Voto_Nulo_Presidente[0]/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0]):,.2f} do total\t\t\t\t\t |')
+        print('-'*66)
+    print(f'| Total de votos = {Votos_Validos_Presidente[0]+Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]}\t\t\t\t\t\t |')
+    print(f'| Total de votos válidos = {Votos_Validos_Presidente[0]} e % {100*Votos_Validos_Presidente[0]/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0]):,.2f} do total\t\t |')
+    print(f'| Total de votos brancos = {Voto_Branco_Presidente[0]} e % {100*Voto_Branco_Presidente[0]/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0]):,.2f} do total\t\t |')
+    print(f'| Total de votos nulos = {Voto_Nulo_Presidente[0]} e % {100*Voto_Nulo_Presidente[0]/(Voto_Nulo_Presidente[0]+Voto_Branco_Presidente[0]+Votos_Validos_Presidente[0]):,.2f} do total\t\t\t |')
     print('-' * 66)
     print('\n')
 
-    # governador
+    # Tabela - GOVERNADOR
     print('-' * 66)
-    print('|{:^66}'.format('RANKING DO RESULTADO PARA GOVERNADOR|'))
+    print('|            RANKING DO RESULTADO PARA GOVERNADOR                |')
     print('-' * 66)
     print('|    Nome    |   Partido   |  Total de votos  |  % votos válidos |')
     print('-' * 66)
     ranking_governador = sorted(lista_Voto_Governador, key=itemgetter(4), reverse=True)
-    count = 1
     for count, (candidato, numero, partido, cargo, votos) in enumerate(ranking_governador, start=1):
-        print('|{:^11} |{:>9}    |{:>15,.2f}   |{:>15,.2f}   |   '.format(candidato, partido, votos, 100 * votos / (Voto_Nulo_Presidente[0] + Voto_Branco_Presidente[0] + Votos_Validos_Presidente[0])))
-    print('-' * 66)
-    print(f'| Total de votos = {Votos_Validos_Governador[0] + Voto_Nulo_Governador[0] + Voto_Branco_Governador[0]}\t\t\t\t\t\t\t\t\t\t\t |')
-    print('-' * 66)
-    print(f'| Total de votos válidos = {Votos_Validos_Governador[0]} e % {100 * Votos_Validos_Governador[0] / (Voto_Nulo_Governador[0] + Voto_Branco_Governador[0] + Votos_Validos_Governador[0]):,.2f} do total\t\t\t\t\t |')
-    print('-' * 66)
-    print(f'| Total de votos brancos = {Voto_Branco_Governador[0]} e % {100 * Voto_Branco_Governador[0] / (Voto_Nulo_Governador[0] + Voto_Branco_Governador[0] + Votos_Validos_Governador[0]):,.2f} do total\t\t\t\t\t |')
-    print('-' * 66)
-    print(f'| Total de votos nulos = {Voto_Nulo_Governador[0]} e % {100 * Voto_Nulo_Governador[0] / (Voto_Nulo_Governador[0] + Voto_Branco_Governador[0] + Votos_Validos_Governador[0]):,.2f} do total\t\t\t\t\t |')
+        print('|{:^11} |{:>9}    |{:>15,.2f}   |{:>15,.2f}   |   '.format(candidato, partido, votos, 100 * votos / (Voto_Nulo_Governador[0] + Voto_Branco_Governador[0] + Votos_Validos_Governador[0])))
+        print('-' * 66)
+    print(f'| Total de votos = {Votos_Validos_Governador[0] + Voto_Nulo_Governador[0] + Voto_Branco_Governador[0]}\t\t\t\t\t\t |')
+    print(f'| Total de votos válidos = {Votos_Validos_Governador[0]} e % {100 * Votos_Validos_Governador[0] / (Voto_Nulo_Governador[0] + Voto_Branco_Governador[0] + Votos_Validos_Governador[0]):,.2f} do total\t\t |')
+    print(f'| Total de votos brancos = {Voto_Branco_Governador[0]} e % {100 * Voto_Branco_Governador[0] / (Voto_Nulo_Governador[0] + Voto_Branco_Governador[0] + Votos_Validos_Governador[0]):,.2f} do total\t\t |')
+    print(f'| Total de votos nulos = {Voto_Nulo_Governador[0]} e % {100 * Voto_Nulo_Governador[0] / (Voto_Nulo_Governador[0] + Voto_Branco_Governador[0] + Votos_Validos_Governador[0]):,.2f} do total\t\t\t |')
     print('-' * 66)
     print('\n')
 
-    # prefeito
+    # Tabela - PREFEITO
     print('-' * 66)
-    print('|{:^66}'.format('RANKING DO RESULTADO PARA PREFEITO|'))
+    print('|            RANKING DO RESULTADO PARA PREFEITO                  |')
     print('-' * 66)
     print('|    Nome    |   Partido   |  Total de votos  |  % votos válidos |')
     print('-' * 66)
     ranking_prefeito = sorted(lista_Voto_Prefeito, key=itemgetter(4), reverse=True)
-    count = 1
     for count, (candidato, numero, partido, cargo, votos) in enumerate(ranking_prefeito, start=1):
-        print('|{:^11} |{:>9}    |{:>15,.2f}   |{:>15,.2f}   |   '.format(candidato, partido, votos, 100 * votos / (Voto_Nulo_Presidente[0] + Voto_Branco_Presidente[0] + Votos_Validos_Presidente[0])))
-    print('-' * 66)
-    print(f'| Total de votos = {Votos_Validos_Prefeito[0] + Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0]}\t\t\t\t\t\t\t\t\t\t\t |')
-    print('-'*66)
-    print(f'| Total de votos válidos = {Votos_Validos_Prefeito[0]} e % {100 * Votos_Validos_Prefeito[0] / (Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0] + Votos_Validos_Prefeito[0]):,.2f} do total\t\t\t\t\t |')
-    print('-'*66)
-    print(f'| Total de votos brancos = {Voto_Branco_Prefeito[0]} e % {100 * Voto_Branco_Prefeito[0] / (Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0] + Votos_Validos_Prefeito[0]):,.2f} do total\t\t\t\t\t |')
-    print('-'*66)
-    print(f'| Total de votos nulos = {Voto_Nulo_Prefeito[0]} e % {100 * Voto_Nulo_Prefeito[0] / (Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0] + Votos_Validos_Prefeito[0]):,.2f} do total\t\t\t\t\t |')
+        print('|{:^11} |{:>9}    |{:>15,.2f}   |{:>15,.2f}   |   '.format(candidato, partido, votos, 100 * votos / (Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0] + Votos_Validos_Prefeito[0])))
+        print('-' * 66)
+    print(f'| Total de votos = {Votos_Validos_Prefeito[0] + Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0]}\t\t\t\t\t\t |')
+    print(f'| Total de votos válidos = {Votos_Validos_Prefeito[0]} e % {100 * Votos_Validos_Prefeito[0] / (Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0] + Votos_Validos_Prefeito[0]):,.2f} do total\t\t |')
+    print(f'| Total de votos brancos = {Voto_Branco_Prefeito[0]} e % {100 * Voto_Branco_Prefeito[0] / (Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0] + Votos_Validos_Prefeito[0]):,.2f} do total\t\t |')
+    print(f'| Total de votos nulos = {Voto_Nulo_Prefeito[0]} e % {100 * Voto_Nulo_Prefeito[0] / (Voto_Nulo_Prefeito[0] + Voto_Branco_Prefeito[0] + Votos_Validos_Prefeito[0]):,.2f} do total\t\t\t |')
     print('-'*66)
 
+# Função que exibe qual partido elegeu mais políticos
 def partido_mais_frequente(lista):
     partidos = [partido for _, _, partido, _, _ in lista]
     contador = Counter(partidos)
-    partido = contador.most_common(1)[0]
+    partido = contador.most_common(1)[0][0]
     return partido
 
+# Função que exibe qual partido elegeu menos políticos
 def partido_menos_frequente(lista):
     partidos = [partido for _, _, partido, _, _ in lista]
     contador = Counter(partidos)
-    partido = contador.most_common()[-1]
+    partido = contador.most_common()[-1][0]
     return partido
 
+# Exibe uma lista dos eleitores que votaram, ordenados por nome e verifica se a quantidade de eleitores bate com o total de votos que foram registrados na eleição (auditoria)
 def Relatorio():
     global partido_mais_frequente, partido_menos_frequente, lista_eleitores
     lista_eleitores.sort()
@@ -378,7 +393,7 @@ def Relatorio():
     print(f'O partido mais frequente é {partido_mais_frequente}')
     print(f'O partido menos frquente é {partido_menos_frequente}')
 
-# sistema
+# Sistema de repetição que executa as funções apresentadas/selecionadas no menu inicial
 while True:
     Menu()
     opc = int(input('Digite sua escolha: '))
