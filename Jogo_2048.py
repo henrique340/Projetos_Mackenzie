@@ -15,6 +15,7 @@ def inicio_do_jogo():
     D ou d: direita
     A ou a: esquerda''')
 
+    # gera aleatoriamente o número 2 em uma posição
     gerar_2(matriz)
     return matriz
 
@@ -39,7 +40,7 @@ def situacao(matriz):
 
     for i in range(4):
         for j in range(4):
-            if matriz[i][j]==0:
+            if matriz[i][j]==0:     # Se tiver 0 no jogo, ele continua
                 return 'Jogo continua'
 
     for i in range(3):
@@ -48,11 +49,11 @@ def situacao(matriz):
                 return 'Jogo continua'
 
     for j in range(3):
-        if matriz[3][j] == matriz[3][j+1]:
+        if matriz[3][j] == matriz[3][j+1]:   # Se tiver números iguais na mesma linha, o jogo continua
             return 'Jogo continua'
 
     for i in range(3):
-        if matriz[i][3] == matriz[i+1][3]:
+        if matriz[i][3] == matriz[i+1][3]:  # Se tiver números iguais na mesma coluna, o jogo continua
             return 'Jogo continua'
 
     return 'Você perdeu'
@@ -63,9 +64,8 @@ def situacao(matriz):
 def comprimir(matriz):
     trocar = False
     nova_matriz = []
-
     for i in range(4):
-        nova_matriz.append([0]*4)
+        nova_matriz.append([0]*4)    # cria uma nova matriz 4x4
 
     for i in range(4):
         pos = 0
