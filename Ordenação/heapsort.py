@@ -13,7 +13,6 @@ def heapify(arr, n, i):
         arr[i], arr[largest] = arr[largest], arr[i]
         heapify(arr, n, largest)
 
-
 def heapSort(arr):
     n = len(arr)
 
