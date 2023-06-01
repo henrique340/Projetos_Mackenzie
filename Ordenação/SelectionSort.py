@@ -7,6 +7,6 @@ def SelectionSort(lista):
         lista[i], lista[min] = lista[min], lista[i]
     return lista
 
-list = [1, 7, 4, 1, 10, 9, -2]
+list = [1, 7, 4, 1, 10, 9, -2, 0]
 sorted = SelectionSort(list)
 print(sorted)
