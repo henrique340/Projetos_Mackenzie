@@ -50,7 +50,6 @@ def hexa_dec(hexadecimal):
 
 
 #sistema
-
 while True:
     print('''Opções
     Binario
