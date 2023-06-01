@@ -1,4 +1,3 @@
-# Merge Sort
 def merge(left, right):
     i, j = 0, 0
     resultado = []
