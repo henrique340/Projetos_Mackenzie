@@ -1,6 +1,5 @@
 from random import randint
 
-
 def inicio_do_jogo():
 
     #criar a matriz inicial
