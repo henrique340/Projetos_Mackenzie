@@ -22,37 +22,41 @@ def inicio_do_jogo():
 def gerar_2(matriz):
     linha = randint(0, 3)
     coluna = randint(0, 3)
-
     while matriz[linha][coluna] != 0:
         linha = randint(0, 3)
         coluna = randint(0, 3)
-
     matriz[linha][coluna] = 2
 
 
 # Verificar as situações do jogo
 def situacao(matriz):
+
+    # ganhar
     for i in range(4):
         for j in range(4):
             if matriz[i][j]==2048:
                 return 'Você ganhou'
 
+    # Se tiver 0 no jogo, ele continua
     for i in range(4):
         for j in range(4):
-            if matriz[i][j]==0:     # Se tiver 0 no jogo, ele continua
+            if matriz[i][j]==0:
                 return 'Jogo continua'
 
+    # se tiver dois números iguais lado a lado, ele continua
     for i in range(3):
         for j in range(3):
             if matriz[i][j] == matriz[i+1][j] or matriz[i][j] == matriz[i][j+1]:
                 return 'Jogo continua'
 
+    # Se tiver números iguais na mesma linha, o jogo continua
     for j in range(3):
-        if matriz[3][j] == matriz[3][j+1]:   # Se tiver números iguais na mesma linha, o jogo continua
+        if matriz[3][j] == matriz[3][j+1]:
             return 'Jogo continua'
 
+    # Se tiver números iguais na mesma coluna, o jogo continua
     for i in range(3):
-        if matriz[i][3] == matriz[i+1][3]:  # Se tiver números iguais na mesma coluna, o jogo continua
+        if matriz[i][3] == matriz[i+1][3]:
             return 'Jogo continua'
 
     return 'Você perdeu'
