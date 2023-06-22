@@ -58,7 +58,7 @@ def situacao(matriz):
     for i in range(3):
         if matriz[i][3] == matriz[i+1][3]:
             return 'Jogo continua'
-
+    # perde
     return 'Você perdeu'
 
 
