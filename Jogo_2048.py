@@ -161,5 +161,3 @@ def mover_baixo(grid):
 #sistema
 while True:
     inicio_do_jogo()
-    if situacao() == 'Fim de jogo':
-        break

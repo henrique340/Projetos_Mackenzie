@@ -1,8 +1,9 @@
 from random import randint
+matriz = []
+for i in range(4):
+    print('[0]'*4)
 while True:
-    matriz = []
-    for i in range(4):
-        print([0]*4)
+    print(matriz)
 
     #apresentação dos comandos
     print('''os comandos são os seguintes:
