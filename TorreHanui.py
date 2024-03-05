@@ -1,24 +1,74 @@
-# funções
+tentativasTotais = 0
+tentativasValidas = 0
 
+#Funções
 def TrocarPosicao(disco, pilha):
+    global tentativasTotais, tentativasValidas
     if disco in Pilha1:
-        Pilha1.pop()
+        if disco != Pilha1[-1]:
+            print('Você só pode escolher o último disco')
+            return
+        tentativasValidas += 1
         if pilha == 2:
-            Pilha2.append(disco)
+            if Pilha2 and Pilha2[-1] < disco:
+                print('Não pode colocar um disco maior em um menor')
+            else:
+                Pilha1.pop()
+                Pilha2.append(disco)
         elif pilha == 3:
-            Pilha3.append(disco)
+            if Pilha3 and Pilha3[-1] < disco:
+                print('Não pode colocar um disco maior em um menor')
+            else:
+                Pilha1.pop()
+                Pilha3.append(disco)
+        elif pilha == 1:
+            pass
+        else:
+            print('Digite um valor válido')
     elif disco in Pilha2:
-        Pilha2.pop()
+        if disco != Pilha2[-1]:
+            print('Você só pode escolher o último disco')
+            return
+        tentativasValidas += 1
         if pilha == 1:
-            Pilha1.append(disco)
+            if Pilha1 and Pilha1[-1] < disco:
+                print('Não pode colocar um disco maior em um menor')
+            else:
+                Pilha2.pop()
+                Pilha1.append(disco)
         elif pilha == 3:
-            Pilha3.append(disco)
-    elif disco in Pilha3:
-        Pilha3.pop()
-        if pilha == 1:
-            Pilha1.append(disco)
+            if Pilha3 and Pilha3[-1] < disco:
+                print('Não pode colocar um disco maior em um menor')
+            else:
+                Pilha2.pop()
+                Pilha3.append(disco)
         elif pilha == 2:
-            Pilha2.append(disco)
+            pass
+        else:
+            print('Digite um valor valido')
+    elif disco in Pilha3:
+        if disco != Pilha3[-1]:
+            print('Você só pode escolher o último disco')
+            return
+        tentativasValidas += 1
+        if pilha == 1:
+            if Pilha1 and Pilha1[-1] < disco:
+                print('Não pode colocar um disco maior em um menor')
+            else:
+                Pilha3.pop()
+                Pilha1.append(disco)
+        elif pilha == 2:
+            if Pilha2 and Pilha2[-1] < disco:
+                print('Não pode colocar um disco maior em um menor')
+            else:
+                Pilha3.pop()
+                Pilha2.append(disco)
+        elif pilha == 3:
+            pass
+        else:
+            print('Digite um valor valido')
+    else:
+        print('Digite um valor válido')
 
 
 def Situacao(pilha1, pilha2, pilha3):
@@ -26,8 +76,7 @@ def Situacao(pilha1, pilha2, pilha3):
     print(f'Pilha 2: {Pilha2}')
     print(f'Pilha 3: {Pilha3}')
 
-# sistema
-
+#Sistema
 print('''\nTorre de Hanui\n
 O jogo consiste em empilhar corretamente os discos 
 Regra 1: só pode mover um disco por vez
@@ -47,3 +96,9 @@ while True:
     disco = int(disco)
     pilha = int(pilha)
     TrocarPosicao(disco, pilha)
+    tentativasTotais += 1
+    if Pilha2 == [6, 5, 4, 3, 2, 1] or Pilha3 == [6, 5, 4, 3 ,2, 1]:
+        print('Parabens! Você ganhou o jogo')
+        print(f'Tentativas totais: {tentativasTotais}')
+        print(f'Tentativas válidas: {tentativasValidas}')
+        break
